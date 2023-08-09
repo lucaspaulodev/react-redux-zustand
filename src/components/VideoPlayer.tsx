@@ -9,6 +9,10 @@ export function VideoPlayer() {
 
     const handleNext = () => dispatch(next())
 
+    if(!currentLesson) {
+        return null;
+    }
+
     return (
         <div className="w-full bg-zinc-950 aspect-video">
             <ReactPlayer
@@ -16,7 +20,7 @@ export function VideoPlayer() {
                 height="100%"
                 controls
                 onEnded={handleNext}
-                playing
+                // playing
                 url={`https://www.youtube.com/watch?v=${currentLesson.id}`}
             />
         </div>

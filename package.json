@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "vitest run",
-    "server": "json-server server.json -w"
+    "server": "json-server server.json -w -d 1000"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.0.3",

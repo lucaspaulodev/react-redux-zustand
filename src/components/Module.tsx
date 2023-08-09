@@ -13,7 +13,7 @@ interface ModuleProps {
 }
 
 export function Module({moduleIndex, title, amoutOfLessons}: ModuleProps) {
-    const lessons = useAppSelector(state => state.player.course.modules[moduleIndex].lessons)
+    const lessons = useAppSelector(state => state.player.course?.modules[moduleIndex].lessons)
 
     const {currentModuleIndex, currentLessonIndex} = useAppSelector(state => {
         const {currentModuleIndex, currentLessonIndex} = state.player
@@ -22,6 +22,10 @@ export function Module({moduleIndex, title, amoutOfLessons}: ModuleProps) {
     })
 
     const dispatch = useDispatch()
+
+    if(!lessons) {
+        return null
+    }
 
     return (
         <Collapsible.Root className="group" defaultOpen={moduleIndex === 0}>
