@@ -18,12 +18,14 @@ interface PlayerState {
     course: Course | null;
     currentModuleIndex: number;
     currentLessonIndex: number;
+    isLoading: boolean;
 }
 
 const initialState: PlayerState = {
     course: null,
     currentModuleIndex: 0,
     currentLessonIndex: 0,
+    isLoading: true
 }
 
 export const getCourse = createAsyncThunk(
@@ -63,15 +65,19 @@ const playerSlice = createSlice({
         }
     },
     extraReducers(builder) {
+        builder.addCase(getCourse.pending, (state) => {
+            state.isLoading = true
+        })
         builder.addCase(getCourse.fulfilled, (state, action) => {
             state.course = action.payload
+            state.isLoading = false
         })
     },
 })
 
 export const player = playerSlice.reducer
 
-export const { play, next, start } = playerSlice.actions
+export const { play, next } = playerSlice.actions
 
 export const useCurrentLesson = () => {
     return useAppSelector(state => {
@@ -82,4 +88,11 @@ export const useCurrentLesson = () => {
     
         return {currentModule, currentLesson}
     })
-} 
+}
+
+export const useIsLoading = () => {
+    return useAppSelector(state => {
+        const {isLoading} = state.player
+        return {isLoading}
+    })
+}
